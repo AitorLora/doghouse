@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dog House Boxing Club — Fuenlabrada, Madrid</title>
+  <style>
+    :root {
+      --red: #e8001e;
+      --red-dark: #b5001a;
+      --black: #0a0a0a;
+      --dark: #111111;
+      --card: #1a1a1a;
+      --border: #2a2a2a;
+      --text: #f0f0f0;
+      --muted: #888;
+      --white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: rgba(10,10,10,0.93);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--red); }
+    .nav-logo span { font-weight: 700; font-size: 1rem; color: var(--white); letter-spacing: 0.5px; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-weight: 500; transition: color .2s; text-transform: uppercase; font-size: .78rem; letter-spacing: .5px; }
+    .nav-links a:hover { color: var(--red); }
+    .nav-cta { background: var(--red) !important; color: var(--white) !important; padding: 8px 20px; border-radius: 4px; }
+    .nav-cta:hover { background: var(--red-dark) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding-top: 64px; position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 50%, rgba(232,0,30,.13) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 30% 30%, rgba(232,0,30,.06) 0%, transparent 60%);
+    }
+    .hero-grid-overlay {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-inner {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto; padding: 4rem 2rem;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+
+    /* Instagram Card */
+    .insta-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; position: relative; }
+    .insta-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--red), #ff6b35, var(--red)); }
+    .insta-header { padding: 1.5rem; display: flex; align-items: center; gap: 1.2rem; }
+    .insta-avatar-ring {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      padding: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .insta-avatar { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 3px solid var(--card); display: block; }
+    .insta-info h2 { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+    .insta-handle { color: var(--muted); font-size: .85rem; }
+    .insta-stats { display: grid; grid-template-columns: repeat(3,1fr); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .insta-stat { text-align: center; padding: 1rem .5rem; }
+    .insta-stat + .insta-stat { border-left: 1px solid var(--border); }
+    .insta-stat-num { display: block; font-size: 1.3rem; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 4px; }
+    .insta-stat-label { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; }
+    .insta-minigrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; padding: 3px; }
+    .insta-minigrid-item { position: relative; aspect-ratio: 1; overflow: hidden; }
+    .insta-minigrid-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .2s; }
+    .insta-minigrid-item:hover img { opacity: .8; }
+    .insta-minigrid-play {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+    }
+    .insta-minigrid-play svg { filter: drop-shadow(0 1px 3px rgba(0,0,0,.7)); }
+    .insta-footer { padding: .8rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+    .insta-follow-btn {
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366);
+      color: white; border: none; padding: 7px 20px; border-radius: 6px;
+      font-size: .82rem; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; transition: opacity .2s;
+    }
+    .insta-follow-btn:hover { opacity: .85; }
+
+    /* Hero text */
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(232,0,30,.12); border: 1px solid rgba(232,0,30,.3);
+      color: var(--red); font-size: .75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      padding: 5px 14px; border-radius: 100px; margin-bottom: 1.5rem;
+    }
+    .hero-badge::before {
+      content: ''; width: 6px; height: 6px; background: var(--red); border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(1.4); } }
+    .hero-title { font-size: clamp(2.8rem,5vw,4.5rem); font-weight: 900; line-height: 1; letter-spacing: -2px; color: var(--white); margin-bottom: 1rem; }
+    .hero-title .red { color: var(--red); }
+    .hero-sub { font-size: 1.1rem; color: var(--muted); margin-bottom: 2.5rem; max-width: 420px; line-height: 1.7; }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { background: var(--red); color: white; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-weight: 700; font-size: 1rem; transition: background .2s, transform .1s; display: inline-block; }
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .btn-outline { border: 1px solid var(--border); color: var(--text); text-decoration: none; padding: 14px 32px; border-radius: 6px; font-weight: 600; font-size: 1rem; transition: border-color .2s, color .2s; display: inline-block; }
+    .btn-outline:hover { border-color: var(--red); color: var(--red); }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 2rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--red); margin-bottom: 1rem; }
+    .section-title { font-size: clamp(2rem,4vw,3rem); font-weight: 900; letter-spacing: -1px; color: var(--white); margin-bottom: 1rem; line-height: 1.1; }
+    .section-sub { font-size: 1.05rem; color: var(--muted); max-width: 540px; line-height: 1.7; }
+
+    /* ── SERVICIOS ── */
+    #servicios { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 1.5rem; margin-top: 3.5rem; }
+    .service-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 2rem;
+      position: relative; overflow: hidden; transition: border-color .25s, transform .2s;
+    }
+    .service-card:hover { border-color: var(--red); transform: translateY(-3px); }
+    .service-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:3px; background:var(--red); transform:scaleX(0); transform-origin:left; transition:transform .3s; }
+    .service-card:hover::before { transform:scaleX(1); }
+    .service-icon { font-size: 2.5rem; margin-bottom: 1.2rem; display: block; }
+    .service-card h3 { font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: .7rem; }
+    .service-card p { color: var(--muted); font-size: .95rem; line-height: 1.65; }
+    .service-tag { display:inline-block; margin-top:1.2rem; font-size:.75rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--red); border:1px solid rgba(232,0,30,.3); padding:3px 10px; border-radius:4px; }
+
+    /* ── GALERÍA ── */
+    #galeria { background: var(--black); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 3.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .gallery-item {
+      position: relative; overflow: hidden; aspect-ratio: 1; cursor: pointer;
+      background: #000;
+    }
+    .gallery-item:first-child { grid-column: span 2; grid-row: span 2; }
+
+    /* thumbnail shown always */
+    .gallery-item .g-thumb {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      transition: transform .4s ease, opacity .3s;
+    }
+    .gallery-item:hover .g-thumb { transform: scale(1.06); opacity: .7; }
+
+    /* play button overlay */
+    .g-play-btn {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none;
+      transition: opacity .2s;
+    }
+    .g-play-btn .circle {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: rgba(0,0,0,.6); border: 2px solid rgba(255,255,255,.8);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, transform .2s;
+    }
+    .gallery-item:hover .g-play-btn .circle { background: var(--red); border-color: var(--red); transform: scale(1.1); }
+    .g-play-btn svg { margin-left: 4px; }
+
+    /* expand icon for photos */
+    .g-expand-btn {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none; opacity: 0; transition: opacity .2s;
+    }
+    .gallery-item:hover .g-expand-btn { opacity: 1; }
+    .g-expand-btn .circle {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(0,0,0,.6); border: 2px solid rgba(255,255,255,.8);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gallery-item:hover .g-expand-btn .circle { background: rgba(232,0,30,.8); border-color: transparent; }
+
+    /* ── NOSOTROS ── */
+    #nosotros { background: var(--dark); border-top: 1px solid var(--border); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 3rem; }
+    .about-img-mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .about-img-mosaic img { width: 100%; object-fit: cover; border-radius: 8px; display: block; }
+    .about-img-mosaic img:first-child { grid-row: span 2; height: 100%; }
+    .about-img-mosaic img:nth-child(2), .about-img-mosaic img:nth-child(3) { aspect-ratio: 1; }
+    .about-text h3 { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--red); margin-bottom: 1rem; }
+    .about-text h2 { font-size: 2.2rem; font-weight: 900; letter-spacing: -1px; color: var(--white); line-height: 1.1; margin-bottom: 1.5rem; }
+    .about-text p { color: var(--muted); font-size: 1rem; line-height: 1.75; margin-bottom: 1rem; }
+    .about-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 2.5rem; }
+    .about-stat { text-align: center; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem .5rem; }
+    .about-stat-num { display: block; font-size: 1.8rem; font-weight: 900; color: var(--red); line-height: 1; margin-bottom: 4px; }
+    .about-stat-label { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; }
+
+    /* ── CONTACTO ── */
+    #contacto { background: var(--black); border-top: 1px solid var(--border); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3.5rem; }
+    .contact-info h3 { font-size: 1.5rem; font-weight: 800; color: var(--white); margin-bottom: 2rem; }
+    .contact-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
+    .contact-icon { width: 44px; height: 44px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .contact-item-text strong { display: block; font-size: .82rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 3px; }
+    .contact-item-text span, .contact-item-text a { font-size: 1rem; color: var(--text); text-decoration: none; }
+    .contact-item-text a:hover { color: var(--red); }
+    .social-links { margin-top: 2rem; display: flex; gap: .8rem; }
+    .social-link { width: 44px; height: 44px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: border-color .2s, background .2s; }
+    .social-link:hover { border-color: var(--red); background: rgba(232,0,30,.1); }
+    .map-section { margin-top: 2.5rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .map-placeholder { background: var(--card); height: 200px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: .5rem; font-size: 1rem; color: var(--muted); }
+    .contact-form { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; }
+    .contact-form h3 { font-size: 1.3rem; font-weight: 800; color: var(--white); margin-bottom: 1.8rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 6px; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; background: var(--dark); border: 1px solid var(--border); border-radius: 8px;
+      padding: 12px 14px; color: var(--text); font-size: .95rem; font-family: inherit; transition: border-color .2s; outline: none;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--red); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group select option { background: var(--dark); }
+    .form-submit { width: 100%; background: var(--red); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background .2s; margin-top: .5rem; }
+    .form-submit:hover { background: var(--red-dark); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 3rem 2rem; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; }
+    .footer-brand img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--red); }
+    .footer-brand-text { font-weight: 800; font-size: 1.05rem; color: var(--white); }
+    .footer-brand-sub { font-size: .78rem; color: var(--muted); }
+    .footer-copy { font-size: .82rem; color: var(--muted); }
+    .footer-copy a { color: var(--red); text-decoration: none; }
+
+    /* ── LIGHTBOX / VIDEO MODAL ── */
+    .modal {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,.97);
+      align-items: center; justify-content: center;
+    }
+    .modal.active { display: flex; }
+    .modal-inner {
+      position: relative; max-width: 92vw; max-height: 92vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal-inner img {
+      max-width: 90vw; max-height: 88vh; object-fit: contain; border-radius: 8px; display: block;
+    }
+    .modal-inner video {
+      max-width: 90vw; max-height: 88vh; border-radius: 8px; display: block;
+      background: #000;
+    }
+    .modal-close {
+      position: fixed; top: 1.2rem; right: 1.2rem;
+      color: white; font-size: 1.5rem; cursor: pointer;
+      background: rgba(255,255,255,.12); width: 44px; height: 44px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      transition: background .2s; z-index: 1001; border: none;
+      line-height: 1;
+    }
+    .modal-close:hover { background: var(--red); }
+    .modal-nav {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      color: white; font-size: 1.5rem; cursor: pointer;
+      background: rgba(255,255,255,.1); width: 48px; height: 48px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      transition: background .2s; border: none; z-index: 1001;
+    }
+    .modal-nav:hover { background: var(--red); }
+    .modal-prev { left: 1rem; }
+    .modal-next { right: 1rem; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+      .hero-text { order: -1; }
+      .hero-sub { margin: 0 auto 2.5rem; }
+      .hero-ctas { justify-content: center; }
+      .hero-badge { margin: 0 auto 1.5rem; width: fit-content; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      nav .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .gallery-grid { grid-template-columns: repeat(2,1fr); }
+      .gallery-item:first-child { grid-column: span 2; grid-row: span 1; }
+      .hero-title { letter-spacing: -1px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#inicio">
+    <img src="assets/avatar.jpg" alt="Dog House" />
+    <span>DOG HOUSE</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto" class="nav-cta">Únete ahora</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-inner">
+
+    <div class="hero-text">
+      <div class="hero-badge">Fuenlabrada, Madrid</div>
+      <h1 class="hero-title">El gym donde<br>nacen los <span class="red">campeones</span></h1>
+      <p class="hero-sub">Dog House Boxing Club — clases de boxeo para todos los niveles, entrenamiento personal y preparación real para la competición.</p>
+      <div class="hero-ctas">
+        <a href="#contacto" class="btn-primary">Empieza hoy</a>
+        <a href="#galeria" class="btn-outline">Ver el gym</a>
+      </div>
+    </div>
+
+    <!-- Instagram Card -->
+    <div class="insta-card">
+      <div class="insta-header">
+        <div class="insta-avatar-ring">
+          <img class="insta-avatar" src="assets/avatar.jpg" alt="Dog House Boxing Club" />
+        </div>
+        <div class="insta-info">
+          <h2>Dog House Boxing Club</h2>
+          <div class="insta-handle">@dog_house_boxing_club</div>
+        </div>
+      </div>
+      <div class="insta-stats">
+        <div class="insta-stat"><span class="insta-stat-num">111</span><span class="insta-stat-label">Posts</span></div>
+        <div class="insta-stat"><span class="insta-stat-num">1.562</span><span class="insta-stat-label">Seguidores</span></div>
+        <div class="insta-stat"><span class="insta-stat-num">968</span><span class="insta-stat-label">Siguiendo</span></div>
+      </div>
+      <div class="insta-minigrid">
+        <!-- posts 1-6: todos vídeo -->
+        <div class="insta-minigrid-item">
+          <img src="assets/post_1.jpg" alt="" />
+          <div class="insta-minigrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="insta-minigrid-item">
+          <img src="assets/post_2.jpg" alt="" />
+          <div class="insta-minigrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="insta-minigrid-item">
+          <img src="assets/post_3.jpg" alt="" />
+          <div class="insta-minigrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="insta-minigrid-item">
+          <img src="assets/post_4.jpg" alt="" />
+          <div class="insta-minigrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="insta-minigrid-item">
+          <img src="assets/post_5.jpg" alt="" />
+          <div class="insta-minigrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+        <div class="insta-minigrid-item">
+          <img src="assets/post_6.jpg" alt="" />
+          <div class="insta-minigrid-play"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+        </div>
+      </div>
+      <div class="insta-footer">
+        <span style="font-size:.8rem;color:var(--muted)">@dog_house_boxing_club</span>
+        <a href="https://www.instagram.com/dog_house_boxing_club" target="_blank" class="insta-follow-btn">Ver en Instagram</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="container">
+    <p class="section-label reveal">Lo que ofrecemos</p>
+    <h2 class="section-title reveal">Entrena como un <span style="color:var(--red)">Dog</span></h2>
+    <p class="section-sub reveal">Desde el primer día hasta el cuadrilátero. Elige tu camino.</p>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <span class="service-icon">🥊</span>
+        <h3>Clases Grupales</h3>
+        <p>Sesiones de boxeo para todos los niveles: desde principiantes absolutos hasta veteranos del ring. Ambiente de familia, exigencia de campeón.</p>
+        <span class="service-tag">Todos los niveles</span>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-icon">🎯</span>
+        <h3>Entrenamiento Personal</h3>
+        <p>Trabaja uno a uno con nuestros coaches. Técnica, condición física y táctica adaptadas al 100% a tus objetivos.</p>
+        <span class="service-tag">1 a 1</span>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-icon">🏆</span>
+        <h3>Preparación para Competición</h3>
+        <p>Sparring, táctica, preparación física y mentalidad ganadora para el día del combate. Tus dogs compiten de verdad.</p>
+        <span class="service-tag">Alta competición</span>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-icon">👊</span>
+        <h3>Interclubs y Eventos</h3>
+        <p>Participamos en veladas e interclubs regularmente. La mejor forma de medir tu progreso y vivir la emoción del boxeo real.</p>
+        <span class="service-tag">Competición</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERÍA -->
+<section id="galeria">
+  <div class="container">
+    <p class="section-label reveal">La casa del perro</p>
+    <h2 class="section-title reveal">Así entrena <span style="color:var(--red)">Dog House</span></h2>
+    <p class="section-sub reveal">Vídeos y fotos reales del gym. Pulsa para reproducir.</p>
+
+    <div class="gallery-grid">
+
+      <!-- Post 1: video -->
+      <div class="gallery-item" onclick="openModal(0)">
+        <img class="g-thumb" src="assets/post_1.jpg" alt="Dog House Boxing Club" />
+        <div class="g-play-btn"><div class="circle"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+
+      <!-- Post 2: video -->
+      <div class="gallery-item" onclick="openModal(1)">
+        <img class="g-thumb" src="assets/post_2.jpg" alt="Dog House Boxing Club" />
+        <div class="g-play-btn"><div class="circle"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+
+      <!-- Post 3: video -->
+      <div class="gallery-item" onclick="openModal(2)">
+        <img class="g-thumb" src="assets/post_3.jpg" alt="Dog House Boxing Club" />
+        <div class="g-play-btn"><div class="circle"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+
+      <!-- Post 4: video -->
+      <div class="gallery-item" onclick="openModal(3)">
+        <img class="g-thumb" src="assets/post_4.jpg" alt="Dog House Boxing Club" />
+        <div class="g-play-btn"><div class="circle"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+
+      <!-- Post 5: video -->
+      <div class="gallery-item" onclick="openModal(4)">
+        <img class="g-thumb" src="assets/post_5.jpg" alt="Dog House Boxing Club" />
+        <div class="g-play-btn"><div class="circle"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+
+      <!-- Post 6: video -->
+      <div class="gallery-item" onclick="openModal(5)">
+        <img class="g-thumb" src="assets/post_6.jpg" alt="Dog House Boxing Club" />
+        <div class="g-play-btn"><div class="circle"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+
+      <!-- Post 7: foto -->
+      <div class="gallery-item" onclick="openModal(6)">
+        <img class="g-thumb" src="assets/post_7.jpg" alt="Dog House Boxing Club" />
+        <div class="g-expand-btn"><div class="circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M15 3h6v6l-2.3-2.3-3.4 3.4-1.4-1.4 3.4-3.4L15 3zM9 21H3v-6l2.3 2.3 3.4-3.4 1.4 1.4-3.4 3.4L9 21z"/></svg></div></div>
+      </div>
+
+      <!-- Post 8: video -->
+      <div class="gallery-item" onclick="openModal(7)">
+        <img class="g-thumb" src="assets/post_8.jpg" alt="Dog House Boxing Club" />
+        <div class="g-play-btn"><div class="circle"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+
+      <!-- Post 9: video -->
+      <div class="gallery-item" onclick="openModal(8)">
+        <img class="g-thumb" src="assets/post_9.jpg" alt="Dog House Boxing Club" />
+        <div class="g-play-btn"><div class="circle"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- NOSOTROS -->
+<section id="nosotros">
+  <div class="container">
+    <p class="section-label reveal">Quiénes somos</p>
+    <div class="about-grid">
+      <div class="about-img-mosaic reveal">
+        <img src="assets/post_9.jpg" alt="Dog House Boxing Club" style="aspect-ratio:unset;height:420px;" />
+        <img src="assets/post_7.jpg" alt="Dog House Boxing Club" />
+        <img src="assets/post_8.jpg" alt="Dog House Boxing Club" />
+      </div>
+      <div class="about-text reveal">
+        <h3>Nuestra historia</h3>
+        <h2>Más que un gym.<br>Una <span style="color:var(--red)">familia</span>.</h2>
+        <p>En Dog House Boxing Club creemos que el boxeo transforma personas. No solo físicamente — también en mentalidad, disciplina y carácter.</p>
+        <p>Desde Fuenlabrada hemos construido una comunidad de fighters reales, donde cada alumno recibe el respeto y la atención que merece, compita o no.</p>
+        <p>Trabajamos con los mejores boxeadores y entrenadores. Nuestros dogs compiten, ganan y sobre todo, crecen.</p>
+        <div class="about-stats">
+          <div class="about-stat"><span class="about-stat-num">111</span><span class="about-stat-label">Posts</span></div>
+          <div class="about-stat"><span class="about-stat-num">1.5K</span><span class="about-stat-label">Seguidores</span></div>
+          <div class="about-stat"><span class="about-stat-num">🥊</span><span class="about-stat-label">Dog House</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="container">
+    <p class="section-label reveal">Únete a nosotros</p>
+    <h2 class="section-title reveal">¿Listo para <span style="color:var(--red)">empezar</span>?</h2>
+    <p class="section-sub reveal">Primera clase de prueba gratuita. Sin compromiso.</p>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>Encuéntranos</h3>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-item-text"><strong>Dirección</strong><span>Av. de Europa 10, Local 7<br>Fuenlabrada, Madrid</span></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-item-text"><strong>Email</strong><a href="mailto:aitorlora57@gmail.com">aitorlora57@gmail.com</a></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon" style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);border:none;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </div>
+          <div class="contact-item-text"><strong>Instagram</strong><a href="https://www.instagram.com/dog_house_boxing_club" target="_blank">@dog_house_boxing_club</a></div>
+        </div>
+        <div class="map-section">
+          <div class="map-placeholder">
+            <span style="font-size:2rem">📍</span>
+            <span>Av. de Europa 10, Local 7</span>
+            <span style="font-size:.85rem">Fuenlabrada, Madrid</span>
+            <a href="https://maps.google.com/?q=Avenida+de+Europa+10+Fuenlabrada+Madrid" target="_blank" style="color:var(--red);font-size:.85rem;text-decoration:none;margin-top:6px;font-weight:600">Ver en Google Maps →</a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal">
+        <h3>Reserva tu clase gratuita</h3>
+        <form onsubmit="handleSubmit(event)">
+          <div class="form-group"><label>Tu nombre</label><input type="text" placeholder="¿Cómo te llamas?" required /></div>
+          <div class="form-group"><label>Teléfono o email</label><input type="text" placeholder="Para confirmarte la clase" required /></div>
+          <div class="form-group">
+            <label>¿Qué te interesa?</label>
+            <select>
+              <option value="">Selecciona una opción</option>
+              <option>Clases grupales</option>
+              <option>Entrenamiento personal</option>
+              <option>Preparación para competición</option>
+              <option>Solo quiero conocer el gym</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Mensaje (opcional)</label><textarea placeholder="¿Tienes experiencia? ¿Alguna pregunta?"></textarea></div>
+          <button type="submit" class="form-submit">Reservar clase gratuita</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="assets/avatar.jpg" alt="Dog House Boxing Club" />
+      <div>
+        <div class="footer-brand-text">Dog House Boxing Club</div>
+        <div class="footer-brand-sub">Av. de Europa 10, Local 7 · Fuenlabrada, Madrid</div>
+      </div>
+    </div>
+    <div class="footer-copy">
+      © 2025 Dog House Boxing Club ·
+      <a href="https://www.instagram.com/dog_house_boxing_club" target="_blank">@dog_house_boxing_club</a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL (imagen + vídeo) -->
+<div class="modal" id="modal">
+  <button class="modal-close" onclick="closeModal()">✕</button>
+  <button class="modal-nav modal-prev" onclick="navModal(-1)">‹</button>
+  <div class="modal-inner" id="modal-inner"></div>
+  <button class="modal-nav modal-next" onclick="navModal(1)">›</button>
+</div>
+
+<script>
+  // Datos de los posts
+  const posts = [
+    { type: 'video', src: 'assets/post_1.mp4', thumb: 'assets/post_1.jpg' },
+    { type: 'video', src: 'assets/post_2.mp4', thumb: 'assets/post_2.jpg' },
+    { type: 'video', src: 'assets/post_3.mp4', thumb: 'assets/post_3.jpg' },
+    { type: 'video', src: 'assets/post_4.mp4', thumb: 'assets/post_4.jpg' },
+    { type: 'video', src: 'assets/post_5.mp4', thumb: 'assets/post_5.jpg' },
+    { type: 'video', src: 'assets/post_6.mp4', thumb: 'assets/post_6.jpg' },
+    { type: 'image', src: 'assets/post_7.jpg' },
+    { type: 'video', src: 'assets/post_8.mp4', thumb: 'assets/post_8.jpg' },
+    { type: 'video', src: 'assets/post_9.mp4', thumb: 'assets/post_9.jpg' },
+  ];
+
+  let currentIdx = 0;
+
+  function openModal(idx) {
+    currentIdx = idx;
+    renderModal();
+    document.getElementById('modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    const inner = document.getElementById('modal-inner');
+    const vid = inner.querySelector('video');
+    if (vid) { vid.pause(); vid.src = ''; }
+    document.getElementById('modal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function navModal(dir) {
+    const inner = document.getElementById('modal-inner');
+    const vid = inner.querySelector('video');
+    if (vid) { vid.pause(); vid.src = ''; }
+    currentIdx = (currentIdx + dir + posts.length) % posts.length;
+    renderModal();
+  }
+
+  function renderModal() {
+    const post = posts[currentIdx];
+    const inner = document.getElementById('modal-inner');
+    if (post.type === 'video') {
+      inner.innerHTML = `<video src="${post.src}" poster="${post.thumb}" controls autoplay playsinline></video>`;
+    } else {
+      inner.innerHTML = `<img src="${post.src}" alt="Dog House Boxing Club" />`;
+    }
+  }
+
+  // Cerrar al hacer clic fuera
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // Teclado
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('modal').classList.contains('active')) return;
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'ArrowLeft') navModal(-1);
+    if (e.key === 'ArrowRight') navModal(1);
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Formulario
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = '¡Reserva enviada! Te contactamos pronto 🥊';
+    btn.style.background = '#1a7a3f';
+    btn.disabled = true;
+  }
+</script>
+
+</body>
+</html>
