@@ -372,6 +372,49 @@
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* ── RESPONSIVE ── */
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      width: 40px; height: 40px; cursor: pointer; background: none; border: none;
+      padding: 4px; border-radius: 8px; transition: background .2s;
+    }
+    .nav-hamburger:hover { background: rgba(255,255,255,.06); }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 2px; background: var(--white);
+      border-radius: 2px; transition: transform .3s, opacity .3s, width .3s;
+      transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: flex; flex-direction: column;
+      position: fixed; top: 64px; left: 0; right: 0; z-index: 190;
+      background: rgba(10,10,10,.98); backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      max-height: 0; overflow: hidden;
+      transition: max-height .35s ease, border-color .35s ease;
+    }
+    .mobile-menu.open {
+      max-height: 480px;
+      border-bottom-color: var(--border);
+    }
+    .mobile-menu a {
+      color: var(--muted); text-decoration: none; font-weight: 500;
+      text-transform: uppercase; font-size: .85rem; letter-spacing: .5px;
+      padding: .9rem 2rem; transition: color .2s, background .2s;
+      border-left: 3px solid transparent;
+    }
+    .mobile-menu a:hover { color: var(--white); background: rgba(255,255,255,.04); border-left-color: var(--red); }
+    .mobile-menu .mobile-cta {
+      margin: .8rem 2rem 1.2rem;
+      background: var(--red); color: var(--white) !important;
+      border-radius: 6px; text-align: center; padding: .9rem !important;
+      border-left: none !important;
+    }
+    .mobile-menu .mobile-cta:hover { background: var(--red-dark) !important; }
+
     @media (max-width: 900px) {
       .hero-inner { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
       .hero-text { order: -1; }
@@ -381,6 +424,7 @@
       .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
       nav .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
     }
     @media (max-width: 600px) {
       .gallery-grid { grid-template-columns: repeat(2,1fr); }
@@ -395,7 +439,7 @@
 <nav>
   <a class="nav-logo" href="#inicio">
     <img src="assets/avatar.jpg" alt="Dog House" />
-    <span>DOG HOUSE</span>
+    <span>DOG HOUSE CLUB</span>
   </a>
   <ul class="nav-links">
     <li><a href="#servicios">Servicios</a></li>
@@ -405,7 +449,20 @@
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#contacto" class="nav-cta">Únete ahora</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MENÚ MÓVIL -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#servicios" onclick="closeMobileMenu()">Servicios</a>
+  <a href="#galeria" onclick="closeMobileMenu()">Galería</a>
+  <a href="#sobre-mi" onclick="closeMobileMenu()">Sobre mí</a>
+  <a href="#boxeadores" onclick="closeMobileMenu()">Boxeadores</a>
+  <a href="#nosotros" onclick="closeMobileMenu()">Nosotros</a>
+  <a href="#contacto" class="mobile-cta" onclick="closeMobileMenu()">Únete ahora</a>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="inicio">
@@ -414,7 +471,7 @@
   <div class="hero-inner">
 
     <div class="hero-text">
-      <div class="hero-badge">Fuenlabrada, Madrid</div>
+      <a href="#contacto" class="hero-badge" style="text-decoration:none;">Fuenlabrada, Madrid</a>
       <h1 class="hero-title">El gym donde<br>nacen los <span class="red">campeones</span></h1>
       <p class="hero-sub">Clases de boxeo para todos los niveles, entrenamiento personal y preparación real para la competición.</p>
       <div class="hero-ctas">
@@ -598,7 +655,7 @@
       <div class="story-intro reveal">
         <img src="assets/entrenador.jpg" alt="Entrenador Dog House Boxing Club" class="story-photo" />
         <p class="story-quote">"El boxeo no solo te enseña a pelear, te enseña a vivir."</p>
-        <span class="story-quote-attr">Dog House Boxing Club</span>
+        <span class="story-quote-attr">Carlos Uduma Lorá</span>
       </div>
       <div class="story-content">
         <div class="story-block reveal">
@@ -661,12 +718,10 @@
 
       <!-- Boxeador 1 -->
       <div class="fighter-card reveal">
-        <div class="fighter-card-placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        </div>
+        <img src="assets/boxeadores/boxeador1.png" alt="Carlos Herrera" />
         <div class="fighter-overlay">
           <span class="fighter-category">Peso Ligero</span>
-          <div class="fighter-name">Nombre Apellido</div>
+          <div class="fighter-name">Carlos "El Rayo" Herrera</div>
           <div class="fighter-weight">60 kg · Amateur</div>
           <div class="fighter-record">
             <span class="record-w">8V</span>
@@ -675,51 +730,31 @@
         </div>
       </div>
 
-      <!-- Boxeador 2 -->
+      <!-- Boxeadora -->
       <div class="fighter-card reveal">
-        <div class="fighter-card-placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        </div>
+        <img src="assets/boxeadores/boxeadora1.png" alt="Sara Domínguez" />
         <div class="fighter-overlay">
-          <span class="fighter-category">Peso Welter</span>
-          <div class="fighter-name">Nombre Apellido</div>
-          <div class="fighter-weight">67 kg · Amateur</div>
+          <span class="fighter-category">Peso Mosca · Fem.</span>
+          <div class="fighter-name">Sara "La Cobra" Domínguez</div>
+          <div class="fighter-weight">51 kg · Amateur</div>
           <div class="fighter-record">
             <span class="record-w">5V</span>
+            <span class="record-d">1E</span>
             <span class="record-l">1D</span>
           </div>
         </div>
       </div>
 
-      <!-- Boxeador 3 -->
+      <!-- Boxeador 2 -->
       <div class="fighter-card reveal">
-        <div class="fighter-card-placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        </div>
+        <img src="assets/boxeadores/boxeador2.png" alt="Miguel Reyes" />
         <div class="fighter-overlay">
-          <span class="fighter-category">Peso Medio</span>
-          <div class="fighter-name">Nombre Apellido</div>
-          <div class="fighter-weight">75 kg · Amateur</div>
+          <span class="fighter-category">Peso Welter</span>
+          <div class="fighter-name">Miguel "El Toro" Reyes</div>
+          <div class="fighter-weight">67 kg · Amateur</div>
           <div class="fighter-record">
             <span class="record-w">11V</span>
             <span class="record-l">3D</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Boxeador 4 -->
-      <div class="fighter-card reveal">
-        <div class="fighter-card-placeholder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-        </div>
-        <div class="fighter-overlay">
-          <span class="fighter-category">Peso Pluma</span>
-          <div class="fighter-name">Nombre Apellido</div>
-          <div class="fighter-weight">57 kg · Amateur</div>
-          <div class="fighter-record">
-            <span class="record-w">6V</span>
-            <span class="record-d">1E</span>
-            <span class="record-l">2D</span>
           </div>
         </div>
       </div>
@@ -875,6 +910,27 @@
     if (e.key === 'ArrowLeft') navModal(-1);
     if (e.key === 'ArrowRight') navModal(1);
   });
+
+  // Menú móvil
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+  }
+
+  hamburger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = mobileMenu.classList.contains('open');
+    isOpen ? closeMobileMenu() : (mobileMenu.classList.add('open'), hamburger.classList.add('open'));
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) closeMobileMenu();
+  });
+
+  window.addEventListener('scroll', closeMobileMenu, { passive: true });
 
   // Scroll reveal
   const observer = new IntersectionObserver(entries => {
