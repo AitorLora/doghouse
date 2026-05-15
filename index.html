@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dog House Boxing Club — Fuenlabrada, Madrid</title>
+  <title>Dog House Boxing Club</title>
+  <link rel="icon" type="image/jpeg" href="assets/avatar.jpg" />
+  <link rel="apple-touch-icon" href="assets/avatar.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --red: #e8001e;
@@ -22,7 +27,7 @@
     body {
       background: var(--black);
       color: var(--text);
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
       line-height: 1.6;
     }
 
@@ -115,9 +120,9 @@
       animation: pulse 2s infinite;
     }
     @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(1.4); } }
-    .hero-title { font-size: clamp(2.8rem,5vw,4.5rem); font-weight: 900; line-height: 1; letter-spacing: -2px; color: var(--white); margin-bottom: 1rem; }
+    .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem,6vw,6rem); font-weight: 400; line-height: .95; letter-spacing: 2px; color: var(--white); margin-bottom: 1rem; }
     .hero-title .red { color: var(--red); }
-    .hero-sub { font-size: 1.1rem; color: var(--muted); margin-bottom: 2.5rem; max-width: 420px; line-height: 1.7; }
+    .hero-sub { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.25rem; font-weight: 400; color: var(--muted); margin-bottom: 2.5rem; max-width: 420px; line-height: 1.75; }
     .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
     .btn-primary { background: var(--red); color: white; text-decoration: none; padding: 14px 32px; border-radius: 6px; font-weight: 700; font-size: 1rem; transition: background .2s, transform .1s; display: inline-block; }
     .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
@@ -128,8 +133,8 @@
     section { padding: 6rem 2rem; }
     .container { max-width: 1200px; margin: 0 auto; }
     .section-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--red); margin-bottom: 1rem; }
-    .section-title { font-size: clamp(2rem,4vw,3rem); font-weight: 900; letter-spacing: -1px; color: var(--white); margin-bottom: 1rem; line-height: 1.1; }
-    .section-sub { font-size: 1.05rem; color: var(--muted); max-width: 540px; line-height: 1.7; }
+    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem,5vw,4.5rem); font-weight: 400; letter-spacing: 2px; color: var(--white); margin-bottom: 1rem; line-height: 1; }
+    .section-sub { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.2rem; font-weight: 400; color: var(--muted); max-width: 540px; line-height: 1.75; }
 
     /* ── SERVICIOS ── */
     #servicios { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -141,7 +146,9 @@
     .service-card:hover { border-color: var(--red); transform: translateY(-3px); }
     .service-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:3px; background:var(--red); transform:scaleX(0); transform-origin:left; transition:transform .3s; }
     .service-card:hover::before { transform:scaleX(1); }
-    .service-icon { font-size: 2.5rem; margin-bottom: 1.2rem; display: block; }
+    .service-icon { width: 52px; height: 52px; margin-bottom: 1.4rem; display: flex; align-items: center; justify-content: center; background: rgba(232,0,30,.1); border: 1px solid rgba(232,0,30,.2); border-radius: 12px; transition: background .25s, border-color .25s; }
+    .service-card:hover .service-icon { background: rgba(232,0,30,.18); border-color: rgba(232,0,30,.4); }
+    .service-icon svg { width: 26px; height: 26px; fill: none; stroke: var(--red); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .service-card h3 { font-size: 1.2rem; font-weight: 800; color: var(--white); margin-bottom: .7rem; }
     .service-card p { color: var(--muted); font-size: .95rem; line-height: 1.65; }
     .service-tag { display:inline-block; margin-top:1.2rem; font-size:.75rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--red); border:1px solid rgba(232,0,30,.3); padding:3px 10px; border-radius:4px; }
@@ -207,8 +214,8 @@
     .about-img-mosaic img:first-child { grid-row: span 2; height: 100%; }
     .about-img-mosaic img:nth-child(2), .about-img-mosaic img:nth-child(3) { aspect-ratio: 1; }
     .about-text h3 { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--red); margin-bottom: 1rem; }
-    .about-text h2 { font-size: 2.2rem; font-weight: 900; letter-spacing: -1px; color: var(--white); line-height: 1.1; margin-bottom: 1.5rem; }
-    .about-text p { color: var(--muted); font-size: 1rem; line-height: 1.75; margin-bottom: 1rem; }
+    .about-text h2 { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; font-weight: 400; letter-spacing: 2px; color: var(--white); line-height: 1; margin-bottom: 1.5rem; }
+    .about-text p { font-family: 'Cormorant Garamond', Georgia, serif; color: var(--muted); font-size: 1.15rem; line-height: 1.8; margin-bottom: 1rem; }
     .about-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 2.5rem; }
     .about-stat { text-align: center; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem .5rem; }
     .about-stat-num { display: block; font-size: 1.8rem; font-weight: 900; color: var(--red); line-height: 1; margin-bottom: 4px; }
@@ -290,6 +297,76 @@
     .modal-prev { left: 1rem; }
     .modal-next { right: 1rem; }
 
+    /* ── SOBRE MÍ ── */
+    #sobre-mi { background: var(--dark); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .about-story { margin-top: 3.5rem; display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start; }
+    .story-intro { position: sticky; top: 90px; }
+    .story-photo { width: 100%; border-radius: 12px; object-fit: cover; margin-bottom: 2rem; border: 1px solid var(--border); display: block; }
+    .story-quote {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.9rem; font-style: italic; font-weight: 300;
+      color: var(--white); line-height: 1.4;
+      border-left: 3px solid var(--red); padding-left: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .story-quote-attr { font-family: 'Cormorant Garamond', Georgia, serif; font-size: .9rem; font-style: normal; color: var(--red); letter-spacing: 2px; text-transform: uppercase; padding-left: 1.5rem; }
+    .story-content { display: flex; flex-direction: column; gap: 0; }
+    .story-block { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+    .story-block:last-child { border-bottom: none; }
+    .story-year { display: inline-block; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: var(--red); margin-bottom: 1rem; }
+    .story-block h4 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; font-weight: 400; letter-spacing: 2px; color: var(--white); margin-bottom: .8rem; }
+    .story-block p { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.15rem; color: var(--muted); line-height: 1.85; }
+    .story-placeholder { font-style: italic; opacity: .6; border: 1px dashed var(--border); border-radius: 8px; padding: 1rem 1.2rem; }
+    @media (max-width: 900px) {
+      .about-story { grid-template-columns: 1fr; gap: 2.5rem; }
+      .story-intro { position: static; }
+    }
+
+    /* ── BOXEADORES ── */
+    #boxeadores { background: var(--black); border-top: 1px solid var(--border); }
+    .fighters-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 3.5rem; }
+    .fighter-card {
+      position: relative; border-radius: 12px; overflow: hidden;
+      aspect-ratio: 3/4; cursor: pointer;
+      background: var(--card); border: 1px solid var(--border);
+      transition: transform .3s, border-color .3s;
+    }
+    .fighter-card:hover { transform: translateY(-4px); border-color: var(--red); }
+    .fighter-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
+    .fighter-card:hover img { transform: scale(1.05); }
+    .fighter-card-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(160deg, #1a1a1a 0%, #0d0d0d 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .fighter-card-placeholder svg { width: 64px; height: 64px; opacity: .15; }
+    .fighter-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.3) 50%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 1.4rem;
+    }
+    .fighter-category {
+      font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+      color: var(--red); background: rgba(232,0,30,.12); border: 1px solid rgba(232,0,30,.3);
+      padding: 3px 9px; border-radius: 4px; display: inline-block; margin-bottom: .6rem; width: fit-content;
+    }
+    .fighter-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; font-weight: 400; letter-spacing: 2px; color: var(--white); line-height: 1; margin-bottom: .4rem; }
+    .fighter-weight { font-size: .78rem; color: var(--muted); margin-bottom: .8rem; }
+    .fighter-record { display: flex; gap: .6rem; }
+    .fighter-record span { font-size: .72rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+    .record-w { background: rgba(34,197,94,.15); color: #22c55e; }
+    .record-l { background: rgba(239,68,68,.15); color: #ef4444; }
+    .record-d { background: rgba(234,179,8,.15); color: #eab308; }
+    .fighter-add {
+      border: 2px dashed var(--border); background: transparent;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .8rem;
+      color: var(--muted); font-size: .88rem; text-decoration: none;
+      transition: border-color .25s, color .25s;
+    }
+    .fighter-add:hover { border-color: var(--red); color: var(--red); }
+    .fighter-add svg { width: 32px; height: 32px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; }
+
     /* ── REVEAL ── */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .55s ease, transform .55s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -323,6 +400,8 @@
   <ul class="nav-links">
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#galeria">Galería</a></li>
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#boxeadores">Boxeadores</a></li>
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#contacto" class="nav-cta">Únete ahora</a></li>
   </ul>
@@ -337,7 +416,7 @@
     <div class="hero-text">
       <div class="hero-badge">Fuenlabrada, Madrid</div>
       <h1 class="hero-title">El gym donde<br>nacen los <span class="red">campeones</span></h1>
-      <p class="hero-sub">Dog House Boxing Club — clases de boxeo para todos los niveles, entrenamiento personal y preparación real para la competición.</p>
+      <p class="hero-sub">Clases de boxeo para todos los niveles, entrenamiento personal y preparación real para la competición.</p>
       <div class="hero-ctas">
         <a href="#contacto" class="btn-primary">Empieza hoy</a>
         <a href="#galeria" class="btn-outline">Ver el gym</a>
@@ -404,25 +483,37 @@
     <p class="section-sub reveal">Desde el primer día hasta el cuadrilátero. Elige tu camino.</p>
     <div class="services-grid">
       <div class="service-card reveal">
-        <span class="service-icon">🥊</span>
+        <div class="service-icon">
+          <!-- guante de boxeo / grupo -->
+          <svg viewBox="0 0 24 24"><path d="M9 4v4M9 4C9 4 6 4 6 7v9a3 3 0 003 3h4a3 3 0 003-3v-3m0 0V7a2 2 0 00-2-2h-1m3 7h2a2 2 0 002-2V8a2 2 0 00-2-2h-2"/></svg>
+        </div>
         <h3>Clases Grupales</h3>
         <p>Sesiones de boxeo para todos los niveles: desde principiantes absolutos hasta veteranos del ring. Ambiente de familia, exigencia de campeón.</p>
         <span class="service-tag">Todos los niveles</span>
       </div>
       <div class="service-card reveal">
-        <span class="service-icon">🎯</span>
+        <div class="service-icon">
+          <!-- persona / entrenamiento 1a1 -->
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="3"/><path d="M5 21v-2a7 7 0 0114 0v2"/><path d="M17 11l2 2 4-4" stroke-width="1.8"/></svg>
+        </div>
         <h3>Entrenamiento Personal</h3>
         <p>Trabaja uno a uno con nuestros coaches. Técnica, condición física y táctica adaptadas al 100% a tus objetivos.</p>
         <span class="service-tag">1 a 1</span>
       </div>
       <div class="service-card reveal">
-        <span class="service-icon">🏆</span>
+        <div class="service-icon">
+          <!-- trofeo / competición -->
+          <svg viewBox="0 0 24 24"><path d="M6 2h12M8 2v4a4 4 0 008 0V2"/><path d="M6 2H4v2a4 4 0 002 3.46M18 2h2v2a4 4 0 01-2 3.46"/><path d="M12 10v5m-4 5h8M10 20H8m6 0h2"/></svg>
+        </div>
         <h3>Preparación para Competición</h3>
         <p>Sparring, táctica, preparación física y mentalidad ganadora para el día del combate. Tus dogs compiten de verdad.</p>
         <span class="service-tag">Alta competición</span>
       </div>
       <div class="service-card reveal">
-        <span class="service-icon">👊</span>
+        <div class="service-icon">
+          <!-- calendario / eventos -->
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>
+        </div>
         <h3>Interclubs y Eventos</h3>
         <p>Participamos en veladas e interclubs regularmente. La mejor forma de medir tu progreso y vivir la emoción del boxeo real.</p>
         <span class="service-tag">Competición</span>
@@ -498,6 +589,42 @@
   </div>
 </section>
 
+<!-- SOBRE MÍ -->
+<section id="sobre-mi">
+  <div class="container">
+    <p class="section-label reveal">Nuestra historia</p>
+    <h2 class="section-title reveal">De la calle al <span style="color:var(--red)">ring</span></h2>
+    <div class="about-story">
+      <div class="story-intro reveal">
+        <img src="assets/entrenador.jpg" alt="Entrenador Dog House Boxing Club" class="story-photo" />
+        <p class="story-quote">"El boxeo no solo te enseña a pelear, te enseña a vivir."</p>
+        <span class="story-quote-attr">Dog House Boxing Club</span>
+      </div>
+      <div class="story-content">
+        <div class="story-block reveal">
+          <span class="story-year">Los comienzos</span>
+          <h4>El chico del gym de detrás de casa</h4>
+          <p>Crecer en Fuenlabrada con un gym a veinte metros de tu portal no es casualidad, es destino. Con apenas doce años entré por primera vez a ese local pequeño, oscuro y lleno de sacos. No había nada glamuroso: olor a cuero viejo, el sonido del temporizador y un hombre al que todos llamaban <strong style="color:var(--white)">el Abuelo</strong>.</p>
+          <p>El Abuelo no era solo un entrenador. Era la enciclopedia viva del boxeo. Cada combinación, cada paso de pies, cada lectura de guardia que hoy le enseño a mis alumnos viene de él. Me enseñó que el ring no miente: aquí no hay excusas, solo trabajo y carácter.</p>
+        </div>
+        <div class="story-block reveal">
+          <span class="story-year">El sueño y la realidad</span>
+          <h4>Lo que pudo ser y lo que tuvo que ser</h4>
+          <p>Durante años entrené con una sola idea en la cabeza: competir a nivel profesional. Las condiciones estaban, la técnica estaba, las ganas sobraban. Pero la vida no siempre sigue el guion que uno escribe de adolescente. Malas decisiones, circunstancias fuera del ring... el boxeo profesional se quedó en el horizonte.</p>
+          <p>Podría haberme alejado del deporte. Muchos lo hacen. Pero el boxeo no es solo un deporte, es una forma de ver el mundo. Y esa visión no se abandona. La derrota más dura no fue en ningún combate: fue aceptar que mi camino era otro. Uno mejor.</p>
+        </div>
+        <div class="story-block reveal">
+          <span class="story-year">Dog House</span>
+          <h4>La revancha más bonita</h4>
+          <p>Dog House nació de esa energía sin canalizar. Abrí el gym en Fuenlabrada porque es mi barrio, porque aquí crecí, y porque sé que el boxeo tiene algo para cada persona — solo necesitas entrar por la puerta.</p>
+          <p>Aquí entrena gente de todo tipo: los que quieren competir y subirse al ring de verdad, los que buscan ponerse en forma de una manera que no se parece a nada que hayan probado antes, los que necesitan desconectar después del trabajo, los que quieren aprender a defenderse, o simplemente los que buscan un sitio donde sentirse parte de algo. No hace falta ningún nivel previo. No hace falta tener un objetivo concreto. Solo hace falta querer.</p>
+          <p>Cuando veo a alguien salir del primer entrenamiento con esa cara de cansancio mezclado con orgullo, veo lo mismo que vi en el espejo del gym del Abuelo. Eso no tiene precio. Esto es Dog House.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- NOSOTROS -->
 <section id="nosotros">
   <div class="container">
@@ -520,6 +647,89 @@
           <div class="about-stat"><span class="about-stat-num">🥊</span><span class="about-stat-label">Dog House</span></div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOXEADORES -->
+<section id="boxeadores">
+  <div class="container">
+    <p class="section-label reveal">El equipo</p>
+    <h2 class="section-title reveal">Nuestros <span style="color:var(--red)">Dogs</span></h2>
+    <p class="section-sub reveal">Cada uno con su historia. Todos con el mismo fuego. Estos son los fighters que representan a Dog House en el ring.</p>
+    <div class="fighters-grid">
+
+      <!-- Boxeador 1 -->
+      <div class="fighter-card reveal">
+        <div class="fighter-card-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <div class="fighter-overlay">
+          <span class="fighter-category">Peso Ligero</span>
+          <div class="fighter-name">Nombre Apellido</div>
+          <div class="fighter-weight">60 kg · Amateur</div>
+          <div class="fighter-record">
+            <span class="record-w">8V</span>
+            <span class="record-l">2D</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boxeador 2 -->
+      <div class="fighter-card reveal">
+        <div class="fighter-card-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <div class="fighter-overlay">
+          <span class="fighter-category">Peso Welter</span>
+          <div class="fighter-name">Nombre Apellido</div>
+          <div class="fighter-weight">67 kg · Amateur</div>
+          <div class="fighter-record">
+            <span class="record-w">5V</span>
+            <span class="record-l">1D</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boxeador 3 -->
+      <div class="fighter-card reveal">
+        <div class="fighter-card-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <div class="fighter-overlay">
+          <span class="fighter-category">Peso Medio</span>
+          <div class="fighter-name">Nombre Apellido</div>
+          <div class="fighter-weight">75 kg · Amateur</div>
+          <div class="fighter-record">
+            <span class="record-w">11V</span>
+            <span class="record-l">3D</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Boxeador 4 -->
+      <div class="fighter-card reveal">
+        <div class="fighter-card-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <div class="fighter-overlay">
+          <span class="fighter-category">Peso Pluma</span>
+          <div class="fighter-name">Nombre Apellido</div>
+          <div class="fighter-weight">57 kg · Amateur</div>
+          <div class="fighter-record">
+            <span class="record-w">6V</span>
+            <span class="record-d">1E</span>
+            <span class="record-l">2D</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA para unirse al roster -->
+      <a href="#contacto" class="fighter-card fighter-add reveal">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;">¿El próximo?<br><span style="font-size:.8rem;font-family:'Inter',sans-serif;font-weight:400;letter-spacing:0">Empieza hoy</span></span>
+      </a>
+
     </div>
   </div>
 </section>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="50" fill="#0a0a0a"/>
+  <circle cx="50" cy="50" r="48" fill="none" stroke="#e8001e" stroke-width="3"/>
+  <!-- guante simplificado -->
+  <g fill="#e8001e">
+    <!-- puño principal -->
+    <rect x="28" y="42" width="28" height="22" rx="5"/>
+    <!-- pulgar -->
+    <rect x="22" y="46" width="10" height="10" rx="4"/>
+    <!-- muñeca/manga -->
+    <rect x="30" y="62" width="24" height="10" rx="3"/>
+    <!-- dedos redondeados arriba -->
+    <rect x="28" y="36" width="7" height="10" rx="3.5"/>
+    <rect x="37" y="34" width="7" height="10" rx="3.5"/>
+    <rect x="46" y="35" width="7" height="10" rx="3.5"/>
+  </g>
+</svg>
